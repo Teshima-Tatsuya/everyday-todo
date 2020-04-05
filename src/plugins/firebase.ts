@@ -1,8 +1,12 @@
 import firebase from "firebase";
 
-const config = {
-  apiKey: ""
-};
+var admin = require("firebase-admin");
 
-const firebaseApp = firebase.initializeApp(config);
+var serviceAccount = require("../secret/serviceAccountKey.json");
+
+const firebaseApp = admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://everyday-todo.firebaseio.com"
+});
+
 export const firestore = firebaseApp.firestore();
