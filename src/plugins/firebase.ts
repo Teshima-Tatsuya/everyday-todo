@@ -1,5 +1,4 @@
-import firebase from "firebase/app";
-import "firebase/auth";
+import firebase from "firebase";
 
 var firebaseConfig = {
   apiKey: process.env.FB_API_KEY,
@@ -12,6 +11,7 @@ var firebaseConfig = {
   measurementId: process.env.FB_MEASUREMENT_ID,
 };
 
-firebase.initializeApp(firebaseConfig);
-
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+}
 export default firebase;
