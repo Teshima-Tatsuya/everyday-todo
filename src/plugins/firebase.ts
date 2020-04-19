@@ -1,12 +1,17 @@
-import firebase from "firebase";
+import firebase from "firebase/app";
+import "firebase/auth";
 
-var admin = require("firebase-admin");
+var firebaseConfig = {
+  apiKey: process.env.FB_API_KEY,
+  authDomain: "everyday-todo.firebaseapp.com",
+  databaseURL: "https://everyday-todo.firebaseio.com",
+  projectId: "everyday-todo",
+  storageBucket: "everyday-todo.appspot.com",
+  messagingSenderId: process.env.FB_MSG_SENDER_ID,
+  appId: process.env.FB_APP_ID,
+  measurementId: process.env.FB_MEASUREMENT_ID,
+};
 
-var serviceAccount = require("../secret/serviceAccountKey.json");
+firebase.initializeApp(firebaseConfig);
 
-const firebaseApp = admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://everyday-todo.firebaseio.com"
-});
-
-export const firestore = firebaseApp.firestore();
+export default firebase;
