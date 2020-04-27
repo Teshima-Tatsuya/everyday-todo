@@ -7,7 +7,7 @@ interface IUser {
 
 const UserContext = createContext<IUser>({ user: undefined });
 
-const UserProvider: React.FC = (children: any) => {
+const UserProvider: React.FC = ({ children }) => {
   // user情報をセットするためのstateを準備
   const [user, setUser] = useState<firebase.User | null | undefined>(undefined);
 
@@ -16,6 +16,7 @@ const UserProvider: React.FC = (children: any) => {
   useEffect(() => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
+      console.log(user);
     });
 
     return unsubscribe;
