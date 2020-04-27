@@ -1,6 +1,29 @@
-import React, { createContext } from "react";
-import Auth from "firebase/auth";
+import React, { createContext, useState, useEffect } from "react";
+import firebase from "../plugins/firebase";
 
-const UserContext = createContext(null);
+interface IUser {
+  user: firebase.User | null | undefined;
+}
 
-export { UserContext };
+const UserContext = createContext<IUser>({ user: undefined });
+
+const UserProvider: React.FC = (children: any) => {
+  // user情報をセットするためのstateを準備
+  const [user, setUser] = useState<firebase.User | null | undefined>(undefined);
+
+  // 認証済みユーザかどうかをチェックする。
+  //
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      setUser(user);
+    });
+
+    return unsubscribe;
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ user }}>{children}</UserContext.Provider>
+  );
+};
+
+export { UserContext, UserProvider };
