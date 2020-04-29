@@ -14,7 +14,12 @@ interface ITodo {
   todo: string | null;
 }
 
-const TodoContext = createContext<ITodo[]>([]);
+interface ITodoContext {
+  todos: ITodo[];
+  add: Function | null;
+}
+
+const TodoContext = createContext<ITodoContext>({ todos: [], add: null });
 
 const TodoProvider: React.FC = ({ children }) => {
   const [todos, setTodo] = useState<ITodo[]>([]);
@@ -43,7 +48,11 @@ const TodoProvider: React.FC = ({ children }) => {
     }
   }, []);
 
-  return <TodoContext.Provider value={todos}>{children}</TodoContext.Provider>;
+  return (
+    <TodoContext.Provider value={{ todos, add }}>
+      {children}
+    </TodoContext.Provider>
+  );
 };
 
 export { TodoContext, TodoProvider };
