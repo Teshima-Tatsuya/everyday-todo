@@ -9,17 +9,22 @@ import React, {
 import { UserContext } from "./user";
 import firebase from "../plugins/firebase";
 
-const TodoContext = createContext(null);
+interface ITodo {
+  uid: string | null;
+  todo: string | null;
+}
 
-const TodoProvider = ({ children }) => {
-  const [todo, setTodo] = useState([]);
+const TodoContext = createContext<ITodo[]>([]);
+
+const TodoProvider: React.FC = ({ children }) => {
+  const [todos, setTodo] = useState<ITodo[]>([]);
   const { user } = useContext(UserContext);
 
   const collection = useMemo(() => {
     const todos = firebase.firestore().collection("todos");
 
-    todos.where("uid", "==", user.uid).onSnapshot((query) => {
-      const data = [];
+    todos.where("uid", "==", user?.uid).onSnapshot((query) => {
+      const data: any = [];
       query.forEach((d) => data.push({ ...d.data(), docId: d.id }));
       setTodo(data);
     });
@@ -27,10 +32,10 @@ const TodoProvider = ({ children }) => {
     return todos;
   }, []);
 
-  const add = useCallback(async (text) => {
+  const add = useCallback(async (text: string) => {
     try {
       await collection.add({
-        id: user.uid,
+        id: user?.uid,
         text,
       });
     } catch (e) {
@@ -38,9 +43,7 @@ const TodoProvider = ({ children }) => {
     }
   }, []);
 
-  return (
-    <TodoContext.Provider value={{ todo, add }}>
-      {children}
-    </TodoContext.Provider>
-  );
+  return <TodoContext.Provider value={todos}>{children}</TodoContext.Provider>;
 };
+
+export { TodoContext, TodoProvider };

@@ -1,6 +1,8 @@
-import * as React from "react";
+import React, { useContext } from "react";
+import { TodoContext } from "../contexts/todo";
 
-const TodoForm: React.FC = (props) => {
+const TodoList: React.FC = (props) => {
+  const todos = useContext(TodoContext);
   return (
     <>
       <ul>
@@ -10,4 +12,4 @@ const TodoForm: React.FC = (props) => {
   );
 };
 
-export default TodoForm;
+export default TodoList;
