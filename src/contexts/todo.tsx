@@ -16,10 +16,10 @@ interface ITodo {
 
 interface ITodoContext {
   todos: ITodo[];
-  add: Function | null;
+  add: Function;
 }
 
-const TodoContext = createContext<ITodoContext>({ todos: [], add: null });
+const TodoContext = createContext<ITodoContext>({ todos: [], add: () => {} });
 
 const TodoProvider: React.FC = ({ children }) => {
   const [todos, setTodo] = useState<ITodo[]>([]);
