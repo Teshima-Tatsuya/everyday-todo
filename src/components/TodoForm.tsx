@@ -9,6 +9,7 @@ const TodoForm: React.FC = (props) => {
   const addTodo = useCallback(() => {
     add(text);
     setText("");
+    console.log("add" + text);
   }, [text]);
   return (
     <>

@@ -6,7 +6,9 @@ const TodoList: React.FC = (props) => {
   return (
     <>
       <ul>
-        <input type="text" />
+        {todos.todos.map((todo) => (
+          <li>{todo.todo}</li>
+        ))}
       </ul>
     </>
   );

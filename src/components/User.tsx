@@ -7,12 +7,7 @@ const User: React.FC = (props) => {
   if (!user) {
     return <>test</>;
   } else {
-    return (
-      <>
-        {user.uid}
-        {user.displayName}
-      </>
-    );
+    return <>{user.displayName}</>;
   }
 };
 

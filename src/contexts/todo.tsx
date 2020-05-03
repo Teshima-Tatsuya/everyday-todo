@@ -6,12 +6,15 @@ import React, {
   useMemo,
   useContext,
 } from "react";
+import "@firebase/firestore";
 import { UserContext } from "./user";
 import firebase from "../plugins/firebase";
 
 interface ITodo {
   uid: string | null;
   todo: string | null;
+  isComplete: boolean;
+  created_at: any;
 }
 
 interface ITodoContext {
@@ -27,8 +30,10 @@ const TodoProvider: React.FC = ({ children }) => {
 
   const collection = useMemo(() => {
     const todos = firebase.firestore().collection("todos");
+    console.log("collection" + user?.uid);
 
     todos.where("uid", "==", user?.uid).onSnapshot((query) => {
+      console.log("todos where ");
       const data: any = [];
       query.forEach((d) => data.push({ ...d.data(), docId: d.id }));
       setTodo(data);
@@ -40,8 +45,10 @@ const TodoProvider: React.FC = ({ children }) => {
   const add = useCallback(async (text: string) => {
     try {
       await collection.add({
-        id: user?.uid,
-        text,
+        uid: user?.uid,
+        todo: text,
+        isCompelte: false,
+        created_at: new Date(),
       });
     } catch (e) {
       console.log(e);
