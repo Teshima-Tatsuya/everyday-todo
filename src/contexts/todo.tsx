@@ -25,31 +25,45 @@ interface ITodoContext {
 const TodoContext = createContext<ITodoContext>({ todos: [], add: () => {} });
 
 const TodoProvider: React.FC = ({ children }) => {
-  const [todos, setTodo] = useState<ITodo[]>([]);
+  const [todos, setTodos] = useState<ITodo[]>([]);
   const { user } = useContext(UserContext);
 
   const collection = useMemo(() => {
-    const todos = firebase.firestore().collection("todos");
-    console.log("collection" + user?.uid);
+    const t = firebase.firestore().collection("todos");
 
-    todos.where("uid", "==", user?.uid).onSnapshot((query) => {
-      console.log("todos where ");
-      const data: any = [];
-      query.forEach((d) => data.push({ ...d.data(), docId: d.id }));
-      setTodo(data);
-    });
+    // 最初はnullなので、チェック
+    if (user?.uid) {
+      console.log(user);
+      console.log(user.uid);
+      t.where("uid", "==", user.uid).onSnapshot((query) => {
+        const data: any = [];
+        query.forEach((d) => {
+          console.log("forEach");
+          console.log(d);
+          data.push({ ...d.data(), docId: d.id });
+        });
+        console.log(data);
+        setTodos(data);
+      });
+    }
 
-    return todos;
-  }, []);
+    return t;
+  }, [user]);
 
   const add = useCallback(async (text: string) => {
     try {
-      await collection.add({
-        uid: user?.uid,
-        todo: text,
-        isCompelte: false,
-        created_at: new Date(),
-      });
+      if (user) {
+        await collection
+          .add({
+            uid: user?.uid,
+            text,
+            isCompelte: false,
+            created_at: new Date(),
+          })
+          .then((ref) => {
+            console.log("Todo Added with id = " + ref.id);
+          });
+      }
     } catch (e) {
       console.log(e);
     }

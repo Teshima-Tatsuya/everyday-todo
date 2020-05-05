@@ -10,14 +10,14 @@ import GoogleLogin from "./components/GoogleLogin";
 function App() {
   return (
     <UserProvider>
-      <TodoProvider>
-        <div className="App">
+      <div className="App">
+        <TodoProvider>
           <TodoForm />
           <TodoList />
-          <GoogleLogin />
-          <User />
-        </div>
-      </TodoProvider>
+        </TodoProvider>
+        <GoogleLogin />
+        <User />
+      </div>
     </UserProvider>
   );
 }

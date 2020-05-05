@@ -3,6 +3,7 @@ import { TodoContext } from "../contexts/todo";
 
 const TodoList: React.FC = (props) => {
   const todos = useContext(TodoContext);
+  console.log(todos);
   return (
     <>
       <ul>
