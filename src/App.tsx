@@ -1,25 +1,14 @@
-import React, { useReducer } from "react";
+import React, { useReducer, useContext } from "react";
 import "./App.css";
-import { UserProvider } from "./contexts/user";
-import { TodoProvider } from "./contexts/todo";
-import TodoForm from "./components/TodoForm";
-import TodoList from "./components/TodoList";
-import User from "./components/User";
-import GoogleLogin from "./components/GoogleLogin";
+import { UserProvider, UserContext } from "./contexts/user";
+import Main from "./components/Main";
 
-function App() {
+const App: React.FC = (props) => {
   return (
     <UserProvider>
-      <div className="App">
-        <TodoProvider>
-          <TodoForm />
-          <TodoList />
-        </TodoProvider>
-        <GoogleLogin />
-        <User />
-      </div>
+      <Main />
     </UserProvider>
   );
-}
+};
 
 export default App;
