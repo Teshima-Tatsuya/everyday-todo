@@ -5,6 +5,7 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import User from "./User";
 import GoogleLogin from "./GoogleLogin";
+import Loading from "./Loading";
 
 const Main: React.FC = (props) => {
   const { isLoading, user } = useContext(UserContext);
@@ -12,14 +13,16 @@ const Main: React.FC = (props) => {
   return (
     <div className="App">
       {isLoading ? (
-        <GoogleLogin />
-      ) : (
+        <Loading />
+      ) : user ? (
         <TodoProvider>
           <TodoForm />
           <TodoList />
+          <User />
         </TodoProvider>
+      ) : (
+        <GoogleLogin />
       )}
-      <User />
     </div>
   );
 };
