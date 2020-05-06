@@ -2,12 +2,14 @@ import React, { useContext } from "react";
 import { TodoContext } from "../contexts/todo";
 
 const TodoList: React.FC = (props) => {
-  const todos = useContext(TodoContext);
+  const { todos, remove } = useContext(TodoContext);
   return (
     <>
       <ul>
-        {todos.todos.map((todo) => (
-          <li>{todo.todo}</li>
+        {todos.map((todo) => (
+          <li>
+            {todo.todo} <button onClick={remove}>削除</button>
+          </li>
         ))}
       </ul>
     </>

@@ -20,9 +20,14 @@ interface ITodo {
 interface ITodoContext {
   todos: ITodo[];
   add: Function;
+  remove: any;
 }
 
-const TodoContext = createContext<ITodoContext>({ todos: [], add: () => {} });
+const TodoContext = createContext<ITodoContext>({
+  todos: [],
+  add: () => {},
+  remove: () => {},
+});
 
 const TodoProvider: React.FC = ({ children }) => {
   const [todos, setTodos] = useState<ITodo[]>([]);
@@ -69,8 +74,16 @@ const TodoProvider: React.FC = ({ children }) => {
     }
   }, []);
 
+  const remove: any = useCallback(async (docId: string) => {
+    try {
+      collection.doc(docId).delete();
+    } catch (e) {
+      console.log(e);
+    }
+  }, []);
+
   return (
-    <TodoContext.Provider value={{ todos, add }}>
+    <TodoContext.Provider value={{ todos, add, remove }}>
       {children}
     </TodoContext.Provider>
   );
