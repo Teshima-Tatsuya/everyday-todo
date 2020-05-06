@@ -9,13 +9,7 @@ import React, {
 import "@firebase/firestore";
 import { UserContext } from "./user";
 import firebase from "../plugins/firebase";
-
-interface ITodo {
-  uid: string;
-  todo: string;
-  isComplete: boolean;
-  created_at: any;
-}
+import { ITodo } from "../types/todo";
 
 interface ITodoContext {
   todos: ITodo[];
