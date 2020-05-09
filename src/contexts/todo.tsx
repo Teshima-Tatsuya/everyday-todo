@@ -72,9 +72,10 @@ const TodoProvider: React.FC = ({ children }) => {
 
   const toggleComplete: any = useCallback(
     async (docId: string) => {
+      const todo = todos.find((t) => t.docId === docId);
       const setTo = {
-        ...todos.find((t) => t.docId === docId),
-        isComplete: true,
+        ...todo,
+        isComplete: !todo?.isComplete,
       };
       try {
         await collection.doc(docId).update(setTo);
