@@ -8,19 +8,21 @@ import React, {
 } from "react";
 import "@firebase/firestore";
 import { UserContext } from "./user";
-import firebase from "../plugins/firebase";
+import firebase, { db } from "../plugins/firebase";
 import { ITodo } from "../types/todo";
 
 interface ITodoContext {
   todos: ITodo[];
   add: Function;
   remove: any;
+  toggleComplete: any;
 }
 
 const TodoContext = createContext<ITodoContext>({
   todos: [],
   add: () => {},
   remove: () => {},
+  toggleComplete: () => {},
 });
 
 const TodoProvider: React.FC = ({ children }) => {
@@ -28,7 +30,7 @@ const TodoProvider: React.FC = ({ children }) => {
   const { user, isLoading } = useContext(UserContext);
 
   const collection = useMemo(() => {
-    const t = firebase.firestore().collection("todos");
+    const t = db.collection("todos");
 
     // 最初はnullなので、チェック
     if (user?.uid) {
@@ -68,6 +70,21 @@ const TodoProvider: React.FC = ({ children }) => {
     }
   }, []);
 
+  const toggleComplete: any = useCallback(
+    async (docId: string) => {
+      const setTo = {
+        ...todos.find((t) => t.docId === docId),
+        isComplete: true,
+      };
+      try {
+        await collection.doc(docId).update(setTo);
+      } catch (e) {
+        console.log(e);
+      }
+    },
+    [todos]
+  );
+
   const remove: any = useCallback(async (docId: string) => {
     try {
       collection.doc(docId).delete();
@@ -77,7 +94,7 @@ const TodoProvider: React.FC = ({ children }) => {
   }, []);
 
   return (
-    <TodoContext.Provider value={{ todos, add, remove }}>
+    <TodoContext.Provider value={{ todos, add, remove, toggleComplete }}>
       {children}
     </TodoContext.Provider>
   );

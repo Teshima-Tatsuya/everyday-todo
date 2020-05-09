@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { ITodo } from "../types/todo";
+import { TodoContext } from "../contexts/todo";
 import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 
 type TodoProps = {
@@ -8,11 +9,13 @@ type TodoProps = {
 
 const Todo: React.FC<TodoProps> = (props: TodoProps) => {
   const { todo } = props;
+  const { toggleComplete } = useContext(TodoContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("changed");
+    toggleComplete(todo.docId);
   };
-  console.log(todo);
+
   return (
     <>
       {todo.todo}

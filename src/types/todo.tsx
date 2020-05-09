@@ -3,4 +3,5 @@ export interface ITodo {
   todo: string;
   isComplete: boolean;
   created_at: any;
+  docId: string;
 }
