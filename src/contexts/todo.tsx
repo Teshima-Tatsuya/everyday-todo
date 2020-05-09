@@ -56,7 +56,7 @@ const TodoProvider: React.FC = ({ children }) => {
           .add({
             uid: user.uid,
             todo: text,
-            isCompelte: false,
+            isComplete: false,
             created_at: new Date(),
           })
           .then((ref) => {
