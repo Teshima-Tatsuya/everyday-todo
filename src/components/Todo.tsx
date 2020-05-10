@@ -3,6 +3,7 @@ import { ITodo } from "../types/todo";
 import { TodoContext } from "../contexts/todo";
 import Checkbox, { CheckboxProps } from "@material-ui/core/Checkbox";
 import ListItemText from "@material-ui/core/ListItemText";
+import Button from "@material-ui/core/Button";
 import styled from "styled-components/macro";
 
 type TodoProps = {
@@ -20,17 +21,23 @@ const TodoText = styled(ListItemText)<{ completed: boolean }>`
 
 const Todo: React.FC<TodoProps> = (props: TodoProps) => {
   const { todo } = props;
-  const { toggleComplete } = useContext(TodoContext);
+  const { toggleComplete, remove } = useContext(TodoContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     console.log("changed");
     toggleComplete(todo.docId);
   };
 
+  const handleRemove = (event: any) => {
+    console.log("removed");
+    remove(todo.docId);
+  };
+
   return (
     <>
       <TodoText primary={todo.todo} completed={todo.isComplete} />
       <Checkbox checked={todo.isComplete} onChange={handleChange} />
+      <Button onClick={handleRemove}>削除</Button>
     </>
   );
 };
