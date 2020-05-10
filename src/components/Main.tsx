@@ -23,6 +23,19 @@ const Wrapper = styled.div`
   }
 `;
 
+const Contents = styled.div`
+  & {
+    width: 80%;
+    height: 90%;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+  }
+`;
+
 const Main: React.FC = (props) => {
   const { isLoading, user } = useContext(UserContext);
 
@@ -32,9 +45,11 @@ const Main: React.FC = (props) => {
         <Loading />
       ) : user ? (
         <TodoProvider>
-          <TodoForm />
-          <TodoList />
-          <User />
+          <Contents>
+            <TodoForm />
+            <TodoList />
+            <User />
+          </Contents>
         </TodoProvider>
       ) : (
         <GoogleLogin />
