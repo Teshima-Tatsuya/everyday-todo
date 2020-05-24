@@ -11,7 +11,7 @@ const Wrapper = styled.div`
 const LoginForm: React.FC = () => {
   return (
     <>
-      <Container fixed>
+      <Container>
         <CssBaseline />
         <GoogleLogin />
         {/*        <p>Sign in With Twitter</p>*/}

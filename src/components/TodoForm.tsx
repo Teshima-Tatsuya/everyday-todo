@@ -15,8 +15,10 @@ const TodoForm: React.FC = (props) => {
       <TextField
         id="todoAdd"
         value={text}
+        label="Todo登録"
         onChange={(e) => setText(e.target.value)}
       />
+
       <Button variant="contained" color="primary" onClick={addTodo}>
         送信
       </Button>

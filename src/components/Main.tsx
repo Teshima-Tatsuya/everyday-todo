@@ -4,10 +4,11 @@ import { TodoProvider } from "../contexts/todo";
 import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import User from "./User";
-import GoogleLogin from "./GoogleLogin";
+import Header from "./Header";
 import LoginForm from "./LoginForm";
 import Loading from "./Loading";
 import styled from "styled-components/macro";
+import { Toolbar } from "@material-ui/core";
 
 const Wrapper = styled.div`
   & {
@@ -31,6 +32,7 @@ const Contents = styled.div`
     background-color: white;
     border-radius: 10px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 100px;
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -46,6 +48,8 @@ const Main: React.FC = (props) => {
         <Loading />
       ) : user ? (
         <TodoProvider>
+          <Header />
+          <Toolbar />
           <Contents>
             <TodoForm />
             <TodoList />
