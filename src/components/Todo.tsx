@@ -24,12 +24,10 @@ const Todo: React.FC<TodoProps> = (props: TodoProps) => {
   const { toggleComplete, remove } = useContext(TodoContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("changed");
     toggleComplete(todo.docId);
   };
 
   const handleRemove = (event: any) => {
-    console.log("removed");
     remove(todo.docId);
   };
 

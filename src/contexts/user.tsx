@@ -32,7 +32,6 @@ const UserProvider: React.FC = ({ children }) => {
     const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
       setUser(user);
       setLoading(false);
-      console.log("setUser");
     });
 
     return unsubscribe;

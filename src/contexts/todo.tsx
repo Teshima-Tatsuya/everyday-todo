@@ -34,8 +34,6 @@ const TodoProvider: React.FC = ({ children }) => {
 
     // 最初はnullなので、チェック
     if (user?.uid) {
-      console.log(user);
-      console.log(user.uid);
       t.where("uid", "==", user.uid).onSnapshot((query) => {
         const data: any = [];
         query.forEach((d) => {
@@ -50,9 +48,6 @@ const TodoProvider: React.FC = ({ children }) => {
 
   const add = useCallback(async (text: string) => {
     try {
-      console.log(isLoading);
-      console.log(user);
-
       if (user) {
         await collection
           .add({

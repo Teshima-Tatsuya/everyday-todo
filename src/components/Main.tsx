@@ -5,6 +5,7 @@ import TodoForm from "./TodoForm";
 import TodoList from "./TodoList";
 import User from "./User";
 import GoogleLogin from "./GoogleLogin";
+import LoginForm from "./LoginForm";
 import Loading from "./Loading";
 import styled from "styled-components/macro";
 
@@ -52,7 +53,9 @@ const Main: React.FC = (props) => {
           </Contents>
         </TodoProvider>
       ) : (
-        <GoogleLogin />
+        <>
+          <LoginForm />
+        </>
       )}
     </Wrapper>
   );

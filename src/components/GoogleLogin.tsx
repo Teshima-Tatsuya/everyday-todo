@@ -1,6 +1,7 @@
 import * as React from "react";
 import firebase from "../plugins/firebase";
 import "firebase/auth";
+import { Button } from "@material-ui/core";
 
 const GoogleLogin: React.FC = (props) => {
   const login: any = () => {
@@ -10,8 +11,9 @@ const GoogleLogin: React.FC = (props) => {
 
   return (
     <>
-      <button onClick={login}>Googleでログイン</button>
-      {firebase.auth().onAuthStateChanged((user) => user?.displayName)}
+      <Button variant="contained" color="primary" onClick={login}>
+        Googleでログイン
+      </Button>
     </>
   );
 };
